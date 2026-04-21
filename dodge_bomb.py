@@ -2,9 +2,22 @@ import os
 import sys
 import pygame as pg
 import random
+import time
 
 WIDTH, HEIGHT = 1100, 650
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+def gameover(screen: pg.Surface) -> None:
+    gm_img = pg.Surface((WIDTH, HEIGHT))
+    gm_img.set_alpha(200)
+    screen.blit(gm_img,screen.get_rect())
+    fonto = pg.font.Font(None, 80)
+    txt = fonto.render("GAME OVER", True, (255, 255, 255))
+    screen.blit(txt, [300,200])
+    kk_img = pg.image.load("fig/8.png").convert_alpha()
+    screen.blit(kk_img, [200,200])
+    screen.blit(kk_img, [700,200])
+    pg.display.update()
+    time.sleep(5)
 
 def check_bound(rct : pg.Rect) -> tuple[bool, bool]:
     """
@@ -39,6 +52,8 @@ def main():
             if event.type == pg.QUIT: 
                 return
         if kk_rct.colliderect(bb_rct):
+            gameover(screen)
+            print("ゲームオーバー")
             return
         screen.blit(bg_img, [0, 0]) 
         key_lst = pg.key.get_pressed()
