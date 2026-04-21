@@ -68,8 +68,7 @@ def main():
     bb_rct.width = bb_img.get_rect().width
     bb_rct.height = bb_img.get_rect().height
     
-    while True:
-        
+    while True:      
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
