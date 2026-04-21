@@ -11,11 +11,11 @@ def check_bound(rct : pg.Rect) -> tuple[bool, bool]:
     引数：こうかとんRectまたは爆弾Rect
     戻り値：横方向、縦方向判定効果（True: 画面内　False: 画面外）
     """
-    yoko, tate = +1, +1
+    yoko, tate = True, True
     if rct.left < 0 or WIDTH < rct.right:
-        yoko = -1
+        yoko = False
     if rct.top < 0 or HEIGHT < rct.bottom:
-        tate = -1
+        tate = False
     return yoko, tate
 
 def main():
@@ -38,6 +38,8 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        if kk_rct.colliderect(bb_rct):
+            return
         screen.blit(bg_img, [0, 0]) 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
@@ -70,7 +72,7 @@ def main():
             vx *= -1
         if not tate:
             vy *= -1
-            
+
         screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
